@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:model="http://br.eximia.jsfutils/ui">
+                
+	<style type="text/css">        
+    	.buttons tbody tr td{
+        	border-style: none !important;
+        }
+        
+        .dataFooterAdd{
+        		border-style: none !important;
+                text-align: left !important;
+            }
+            
+       	.dataFooterExportXls{
+        		border-style: none !important;
+                text-align: left !important;
+                width:10%;
+            }
+            
+        .dataFooterExportPdf{
+        		border-style: none !important;
+                text-align: left !important;
+                width:10%;
+            } 
+
+        .dataFooterLength{
+        	border-style: none !important;	
+            text-align: right !important;
+        }
+    </style>
+
+	<model:methodParam name="editAction" value="#{editPage}"/>
+	<model:methodParam name="viewAction" value="#{viewPage}"/>
+	<model:methodParam name="addAction" value="#{addAction}"/>
+	<model:methodParam name="deleteAction" value="#{deleteAction}"/>
+                
+    <model:datatable id="#{id}" rows="2" collection="#{collection}" sortBy="#{sortBy}" header="#{header}" scrollable="true" scrollHeight="300" lazy="#{lazy}">
+		<p:column style="#{ renderedView and renderedEdit ? 'width:120px;' : 'width:80px;' }  " exportable="false">
+	        <h:panelGrid columns="3" styleClass="buttons">
+	        	<p:commandButton rendered="#{renderedView}" action="#{viewAction}" icon="ui-icon ui-icon-zoomin" title="#{bundleDatatableCrudList['datatableCrudList.view']}">
+	                <f:setPropertyActionListener value="#{registro}" target="#{selection}" />
+	            </p:commandButton>
+	        	<p:commandButton rendered="#{renderedEdit}" action="#{editAction}" icon="ui-icon ui-icon-pencil" title="#{bundleDatatableCrudList['datatableCrudList.edit']}">
+	                <f:setPropertyActionListener value="#{registro}" target="#{selection}" />
+	            </p:commandButton>
+	            <p:commandButton id="btnDelete" disabled="#{disabledDelete}" action="#{deleteAction}" update="@form" icon="ui-icon ui-icon-close" title="#{bundleDatatableCrudList['datatableCrudList.remove']}" immediate="true" oncomplete="PF('#{id}').clearFilters()">
+	                <f:setPropertyActionListener value="#{registro}" target="#{selection}" />
+	                <p:confirm header="#{bundleDatatableCrudList['datatableCrudList.remove.header']}" message="#{bundleDatatableCrudList['datatableCrudList.remove.confirm']}" icon="ui-icon-alert" />
+	            </p:commandButton>
+	        </h:panelGrid>
+	    </p:column>
+	    <ui:insert/> 
+	    <f:facet name="footer">
+             <h:panelGrid columns="4" columnClasses="dataFooterAdd, dataFooterExportXls, dataFooterLength">
+                 <p:commandButton id="btnAdd" rendered="#{not empty visibilityEdit ? visibilityEdit : true}" disabled="#{ not empty disabledAdd ? disabledAdd : (!(renderedEdit))}" actionListener="#{addAction}" action="#{editAction}"  value="#{bundleDatatableCrudList['datatableCrudList.add']}" icon="ui-icon ui-icon-document"/>
+                 <p:commandButton value="#{bundleDatatableCrudList['datatableCrudList.exportXls']}" icon="ui-icon ui-icon-document" ajax="false">
+ 					<p:dataExporter type="xls" target="#{id}" fileName="exportableXls" pageOnly="false" postProcessor="#{postProcessorController.postProcessorXLS}" />
+ 				 </p:commandButton>
+                 <h:outputText rendered="#{not lazy}" value="#{bundleDatatableCrudList['datatableCrudList.total']} #{fn:length(collection)}"   />
+                 <h:outputText rendered="#{lazy}" value="#{bundleDatatableCrudList['datatableCrudList.total']} #{total}"   />
+             </h:panelGrid>
+         </f:facet>
+	</model:datatable>
+</ui:composition>

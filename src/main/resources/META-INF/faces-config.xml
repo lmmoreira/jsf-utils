@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    <application>
+        <resource-bundle>
+            <base-name>br.eximia.jsfutils.i18n.authentication</base-name>
+            <var>bundleAuthentication</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>br.eximia.jsfutils.i18n.datatableCrudList</base-name>
+            <var>bundleDatatableCrudList</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>br.eximia.jsfutils.i18n.confirmDialog</base-name>
+            <var>bundleConfirmDialog</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>br.eximia.jsfutils.i18n.crudDialog</base-name>
+            <var>bundleCrudDialog</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>br.eximia.jsfutils.i18n.datatable</base-name>
+            <var>bundleDatatable</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>br.eximia.jsfutils.i18n.datatableCRUD</base-name>
+            <var>bundleDatatableCRUD</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>br.eximia.jsfutils.i18n.emailManager</base-name>
+            <var>bundleEmailManager</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>br.eximia.jsfutils.i18n.telephoneManager</base-name>
+            <var>bundleTelephoneManager</var>
+        </resource-bundle>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+    </application>
+</faces-config>

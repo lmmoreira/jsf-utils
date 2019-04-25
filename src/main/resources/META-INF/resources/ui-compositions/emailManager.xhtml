@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:model="http://br.eximia.jsfutils/ui">
+
+	<h:panelGrid columns="1">
+		<model:labeledContent label="#{bundleEmailManager['emailManager.email']}">
+			<p:inputText id="#{id}email" value="#{emailProperty.email}" />
+		</model:labeledContent>
+		<h:panelGroup layout="block" style="width:100%">
+             <center>
+                 <p:commandButton value="#{bundleEmailManager['emailManager.add']}" update=":#{form}:#{container}:#{id}email, :#{form}:#{container}:#{id}emails" action="#{controller[init]}" process="@this, :#{form}:#{container}:#{id}email">
+                     <p:collector value="#{emailProperty}" addTo="#{emailsProperty}" />
+                 </p:commandButton>
+             </center>
+         </h:panelGroup>
+         <p:dataTable id="#{id}emails" var="registro" value="#{emailsProperty}" paginator="true" rows="2" emptyMessage="#{bundleEmailManager['emailManager.datatable.empty']}">
+         	<model:column header="#{bundleEmailManager['emailManager.datatable.email']}" field="#{registro.email}" />
+         	<p:column>
+                <p:commandButton process="@this" update=":#{form}" icon="ui-icon ui-icon-close" title="#{bundleEmailManager['emailManager.datatable.remove']}">
+                    <p:collector value="#{registro}" removeFrom="#{emailsProperty}" />
+                </p:commandButton>
+            </p:column>
+         </p:dataTable>
+	</h:panelGrid>
+    
+</ui:composition>

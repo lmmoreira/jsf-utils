@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+	<p:dataTable id="#{id}"
+                 widgetVar="#{id}"
+                 value="#{collection}" 
+                 var="registro"
+                 paginator="true" 
+                 scrollable="#{scrollable}" liveScroll="false" scrollRows="10" rows="50" 
+                 scrollHeight="#{scrollHeight}"
+                 resizableColumns="true"
+                 paginatorPosition="bottom"
+                 filterEvent="enter" 
+                 lazy="#{lazy}"
+                 sortBy="#{sortBy}" 
+                 sortOrder="descending" 
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {JumpToPageDropdown} {NextPageLink} {LastPageLink}"
+ 				 currentPageReportTemplate="[ Exibindo de {startRecord} a {endRecord} no total de {totalRecords} - Página: {currentPage}/{totalPages} ]"
+                 emptyMessage="#{bundleDatatable['datatable.empty']}">
+        <p:ajax event="filter" ignoreAutoUpdate="true"/>
+        <f:facet name="header">
+        	<h:outputText value="#{header eq '' ? bundleDatatable['datatable.header'] : header}"/>
+        </f:facet>
+        <ui:insert/> 
+    </p:dataTable>
+</ui:composition>

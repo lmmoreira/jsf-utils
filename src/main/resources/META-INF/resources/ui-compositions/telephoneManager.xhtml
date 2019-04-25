@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:model="http://br.eximia.jsfutils/ui">
+
+	<h:panelGrid columns="1">
+		<h:outputText value="#{bundleTelephoneManager['telephoneManager.telephone']}" />
+        <h:panelGrid columns="2" style="width: 95%">
+            <p:inputMask id="#{id}area" value="#{telephoneProperty.area}" mask="99" style="width: 20px"/>
+            <p:inputMask id="#{id}telephone" value="#{telephoneProperty.telefone}" mask="9999-9999" style="width: 100%"/>
+            <h:outputText/>
+            <p:selectOneMenu id="#{id}tipos" value="#{telephoneProperty.tipo}" var="item">
+                <f:selectItems value="#{tipos}" var="tipo" itemLabel="#{tipo.value}" itemValue="#{tipo}"/>
+                <p:column>
+                    #{item.value}
+                </p:column>
+            </p:selectOneMenu>
+        </h:panelGrid>
+		<h:panelGroup layout="block" style="width:100%">
+             <center>
+                 <p:commandButton value="#{bundleTelephoneManager['telephoneManager.add']}" update=":#{form}:#{container}:#{id}area, :#{form}:#{container}:#{id}telephone, :#{form}:#{container}:#{id}tipos, :#{form}:#{container}:#{id}telephones" action="#{controller[init]}" process="@this, :#{form}:#{container}:#{id}area, :#{form}:#{container}:#{id}telephone, :#{form}:#{container}:#{id}tipos">
+                     <p:collector value="#{telephoneProperty}" addTo="#{telephonesProperty}" />
+                 </p:commandButton>
+             </center>
+         </h:panelGroup>
+         <p:dataTable id="#{id}telephones" var="registro" value="#{telephonesProperty}" paginator="true" rows="2" emptyMessage="#{bundleTelephoneManager['telephoneManager.datatable.empty']}">
+         	<model:column header="#{bundleTelephoneManager['telephoneManager.datatable.telephone']}" field="#{registro.area} - #{registro.telefone}" />
+         	<model:column header="#{bundleTelephoneManager['telephoneManager.datatable.type']}" field="#{registro.tipo.value}" />
+         	<p:column>
+                <p:commandButton process="@this" update=":#{form}" icon="ui-icon ui-icon-close" title="#{bundleTelephoneManager['telephoneManager.datatable.remove']}">
+                    <p:collector value="#{registro}" removeFrom="#{telephonesProperty}" />
+                </p:commandButton>
+            </p:column>
+         </p:dataTable>
+	</h:panelGrid>
+    
+</ui:composition>

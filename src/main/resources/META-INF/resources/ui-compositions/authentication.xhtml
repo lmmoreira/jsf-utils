@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:model="http://br.eximia.jsfutils/ui">
+                
+	<style type="text/css">
+
+        .main{
+            border-style:solid;
+            border-width:1px;
+            width:600px;
+            height:350px;
+        }
+
+        .header{
+            border-bottom-style:solid;
+            border-width:1px;
+            width:100%;
+            
+            padding-left:70px;
+        }
+        
+        .header-text{
+            text-align:center;
+            color:rgb(85, 77, 101);
+        }
+        
+        .mainHeaderText{
+        	font-size:32px;
+        }
+        
+        .subHeaderText{
+        	font-size:18px;
+        }
+
+        .authentication-text{
+            font-size:11px;
+            color:#444444;
+            font-family:Arial;
+            margin-left:5px;
+            margin-bottom:10px;
+        }
+
+        .field{
+            width: 170px;
+        }
+
+        .enter{
+            margin-left:310px;
+            margin-bottom:20px;
+        }
+		
+		.error{
+			margin-top:10px;
+			color:red;
+			font-size:11px;
+            font-family:Arial;
+            font-weight:bold;
+            padding: 10px 3px 8px 10px !important;
+		}
+
+        .help{
+            border: 1px dotted #DDDDDD;
+            padding: 5px;
+            color: #5A82BD;
+            font-size:11px;
+            font-family:"Arial";
+            margin-left:15px;
+            margin-right:15px;
+            margin-top:5px;
+            text-align:left;
+        }
+
+    </style>
+
+    <center>
+	    <h:panelGroup layout="block" styleClass="main">
+	        <h:panelGrid columns="2" styleClass="header">
+	           <h:graphicImage value="/Imagens/Eximia/eximia-lg-authentication.png"/>
+	           <h:panelGrid columns="1" styleClass="header-text">
+		       		<h:outputLabel styleClass="mainHeaderText">#{mainheaderText}</h:outputLabel>
+		        	<h:outputLabel styleClass="subHeaderText">#{subHeaderText}</h:outputLabel>
+	            </h:panelGrid>
+	        </h:panelGrid>
+	        <form action="j_spring_security_check" method="post">
+	            <h:panelGrid columns="2">
+	                <h:graphicImage value="/Imagens/locker.png"/>
+	                <h:panelGroup layout="block">
+	                    <h:outputLabel styleClass="authentication-text">#{bundleAuthentication['authentication.description']}</h:outputLabel>
+	                    <h:panelGrid columns="2">
+							<model:labeledContent label="#{bundleAuthentication['authentication.user']}">
+								<h:inputText id="j_username" styleClass="field"/>
+							</model:labeledContent>
+							<model:labeledContent label="#{bundleAuthentication['authentication.password']}">
+								<h:inputSecret id="j_password" styleClass="field"/>
+							</model:labeledContent>
+	                    </h:panelGrid>
+	                    <h:commandButton value="#{bundleAuthentication['authentication.enter']}" styleClass="enter"/>
+						<center>
+							<h:outputText value="#{SPRING_SECURITY_LAST_EXCEPTION.message}" rendered="#{param.error}" styleClass="error"/>
+						</center>
+	                </h:panelGroup>
+	            </h:panelGrid>
+	        </form>
+	        <h:panelGrid columns="2" styleClass="help">
+	            <h:graphicImage value="/Imagens/interrogacao.png"/>
+	            <h:outputLabel>#{bundleAuthentication['authentication.help']}</h:outputLabel>
+	       </h:panelGrid>
+	    </h:panelGroup>
+	</center>
+</ui:composition>
